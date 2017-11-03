@@ -97,11 +97,6 @@ public class HbaseTest {
 	}
 	
 	
-	
-	
-	
-	
-	
 	//新增数据
 	public void putData() throws IOException{
 		TableName tableName = TableName.valueOf("bd14:fromjava");
@@ -141,10 +136,6 @@ public class HbaseTest {
 		table.put(butPut);
 		System.out.println("表插入数据成功!");
 	}
-	
-	
-	
-	
 	
 	
 	public void getData() throws IOException{
@@ -188,10 +179,6 @@ public class HbaseTest {
 					}
 				}
 			}*/
-		
-		
-		
-		
 //		System.out.println("rowkey:"
 //				+Bytes.toString(result.getRow())
 //				+",columnfamily:i, columnqualiy:username, value:"+
@@ -226,43 +213,13 @@ public class HbaseTest {
 					+"rowkey"+rowkey
 					+"value"+value);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 //			System.out.println(result.toString());
 		}
 	}
 	
-	
-
-	
-	
-	
-	
 	public void cleanUp() throws IOException{
 		connection.close();
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	public static void main(String[] args) 
 			throws IOException{
