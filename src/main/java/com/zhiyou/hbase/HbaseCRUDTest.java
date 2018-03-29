@@ -22,8 +22,9 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class HbaseTest {
+public class HbaseCRUDTest {
 
+	public Table hbaseTable;
 	
 	public Connection connection;
 	//用HBaseconfuguration
@@ -32,16 +33,7 @@ public class HbaseTest {
 			HBaseConfiguration.create();
 	
 	
-	
-	public Table table;
-	public Admin admin;
-	
-	
-
-	
-	
-	
-	public HbaseTest() throws IOException{
+	public HbaseCRUDTest() throws IOException{
 		//对connect初始化
 		connection = ConnectionFactory
 				.createConnection();
@@ -50,12 +42,19 @@ public class HbaseTest {
 	}
 	
 	
+	
+	public Admin admin;
 	public void createTable(String tableName, String... cf1) 
 			throws IOException{
-		//获取admin对象
-		Admin admin = connection.getAdmin();
+		/* 
+		 * admin
+		 * tableName
+		 * HTableDescriptor
+		 * HColumnDescriptor
+		 */
+		
 		TableName tName = TableName.valueOf(tableName);
-		HTableDescriptor hDescriptor = 
+		HTableDescriptor hTableDescriptor = 
 				new HTableDescriptor(tName);
 		if(admin.tableExists(tName)){
 			System.out.println("表"+tName+"已存在");
@@ -65,15 +64,16 @@ public class HbaseTest {
 		for(String cf : cf1){
 			HColumnDescriptor family = new
 					HColumnDescriptor(cf);
-			hDescriptor.addFamily(family);
+			hTableDescriptor.addFamily(family);
 		}
 		//创建表
-		admin.createTable(hDescriptor);
+		Admin admin = connection.getAdmin();
+		admin.createTable(hTableDescriptor);
 		System.out.println("表"+tableName+"创建成功");
 	}
 
 	
-	
+	// delete hbase table
 	public void deleteTable(String tableName) 
 			throws IOException{
 		//获取admin对象
@@ -140,7 +140,7 @@ public class HbaseTest {
 	
 	public void getData() throws IOException{
 		TableName tableName = TableName.valueOf("bd14:fromjava");
-		table = connection.getTable(tableName);
+		hbaseTable = connection.getTable(tableName);
 		//构建get对象
 		List<Get> gets = new ArrayList<Get>();
 		
@@ -148,7 +148,7 @@ public class HbaseTest {
 			Get get = new Get(Bytes.toBytes("rowkey_"+i));
 			gets.add(get);
 		}
-		Result[] results = table.get(gets);
+		Result[] results = hbaseTable.get(gets);
 		
 		//结果集
 		for(Result result : results){
@@ -223,12 +223,15 @@ public class HbaseTest {
 	
 	public static void main(String[] args) 
 			throws IOException{
-		HbaseTest hbaseTest = new HbaseTest();
-//		hbaseTest.createTable("bd14:fromjava", "i","j");
-//		hbaseTest.deleteTable("bd14:fromjava");
-//		hbaseTest.putData();
-		hbaseTest.getData();
-		hbaseTest.cleanUp();
+		HbaseCRUDTest hbaseCRUDTest = new HbaseCRUDTest();
+		
+		// create_namespace 'grj'
+		hbaseCRUDTest.createTable("grj:fromjava", "i","j");
+		
+//		hbaseCRUDTest.deleteTable("grj:fromjava");
+//		hbaseCRUDTest.putData();
+//		hbaseCRUDTest.getData();
+		hbaseCRUDTest.cleanUp();
 	}
 	
 	

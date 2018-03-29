@@ -2,7 +2,6 @@ package com.zhiyou.hbase;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,23 +37,24 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
 
 public class HbaseScan {
+	
+	public Table hbaseTable;
+	public Admin admin;
 
 	public static Configuration configuration = 
 			HBaseConfiguration.create();
 	
 	public Connection connection;
 
-
-	public Table bd14Test;
-	public Admin admin;
+	
 	
 	public HbaseScan() throws IOException{
 
 		connection = ConnectionFactory
 				.createConnection();
-		bd14Test = 
+		hbaseTable = 
 				connection.getTable(
-						TableName.valueOf("bd14:fromjava"));
+						TableName.valueOf("grj:"+hbaseTable.toString()));
 		admin = connection.getAdmin();
 	}
 	
@@ -64,15 +64,15 @@ public class HbaseScan {
 		Scan scan = new Scan();
 	
 		//限制条件
-//		scan.addFamily(Bytes.toBytes("i"));
-//		scan.addColumn(Bytes.toBytes("i"), Bytes.toBytes("age"));
+		// scan.addFamily(Bytes.toBytes("i"));
+		// scan.addColumn(Bytes.toBytes("i"), Bytes.toBytes("age"));
+		// scan.setTimeRange(minStamp, maxStamp);
 		
-//		scan.setTimeRange(minStamp, maxStamp);
 		scan.setStartRow(Bytes.toBytes("rowkey_3"));
 		//变成闭区间  +1
 		scan.setStopRow(Bytes.toBytes("rowkey_5"+1));
 
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 	}
 	
@@ -103,7 +103,7 @@ public class HbaseScan {
 		
 		scan.setFilter(ltRowFilter);
 		
-		ResultScanner rScanner = bd14Test.getScanner(scan);
+		ResultScanner rScanner = hbaseTable.getScanner(scan);
 		showResult(rScanner);
 	}
 	
@@ -116,7 +116,7 @@ public class HbaseScan {
 		Scan scan = new Scan(); 
 		scan.setFilter(familyFilter);
 		
-		ResultScanner rScanner = bd14Test.getScanner(scan);
+		ResultScanner rScanner = hbaseTable.getScanner(scan);
 		showResult(rScanner);
 	}
 	
@@ -130,7 +130,7 @@ public class HbaseScan {
 						, new BinaryPrefixComparator(Bytes.toBytes("phone_")));
 		Scan scan = new Scan();
 		scan.setFilter(qualifyFilter);
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 	}
 	
@@ -144,7 +144,7 @@ public class HbaseScan {
 		Scan scan = new Scan();
 		scan.addFamily(Bytes.toBytes("j"));
 		scan.setFilter(columnRangeFilter);
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 	}
 	
@@ -157,7 +157,7 @@ public class HbaseScan {
 						, new RegexStringComparator("n_6"));
 		Scan scan = new Scan();
 		scan.setFilter(valueFilter);
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 		
 		
@@ -171,7 +171,7 @@ public class HbaseScan {
 						, Bytes.toBytes("i:age"));
 		Scan scan = new Scan();
 		scan.setFilter(dependentColumnFilter);
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 		
 		
@@ -196,7 +196,7 @@ public class HbaseScan {
 		
 		Scan scan = new Scan();
 		scan.setFilter(filter);
-		ResultScanner rs = bd14Test.getScanner(scan);
+		ResultScanner rs = hbaseTable.getScanner(scan);
 		showResult(rs);
 	}
 	
