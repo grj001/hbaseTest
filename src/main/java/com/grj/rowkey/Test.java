@@ -1,4 +1,4 @@
-package com.zhiyou.rowkey;
+package com.grj.rowkey;
 
 import java.util.Date;
 

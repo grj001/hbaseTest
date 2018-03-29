@@ -1,4 +1,4 @@
-package com.zhiyou.hbase;
+package com.grj.hbase;
 
 import java.io.IOException;
 import java.sql.Timestamp;
