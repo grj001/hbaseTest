@@ -200,29 +200,7 @@ public class HbaseScan {
 		showResult(rs);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	public void showResult(ResultScanner rs) throws IOException{
