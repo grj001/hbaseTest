@@ -181,7 +181,7 @@ public class HbaseCRUDTest {
 	 */
 	public void deleteTable() throws IOException {
 		logger.info("deleteTable begin .......................");
-		
+
 		HTableDescriptor hDescriptor;
 
 		hDescriptor = new HTableDescriptor(tableName);
@@ -207,11 +207,11 @@ public class HbaseCRUDTest {
 		HbaseCRUDTest hbaseCRUDTest = new HbaseCRUDTest();
 
 		// create_namespace 'grj'
-//		hbaseCRUDTest.createTable("i", "j");
+		// hbaseCRUDTest.createTable("i", "j");
 
-//		 hbaseCRUDTest.putData();
-//		 hbaseCRUDTest.getData();
-		 hbaseCRUDTest.deleteTable();
+		// hbaseCRUDTest.putData();
+		// hbaseCRUDTest.getData();
+		// hbaseCRUDTest.deleteTable();
 		hbaseCRUDTest.cleanUp();
 	}
 
